@@ -7,6 +7,10 @@
   <title>An Giang Trip</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -15,80 +19,246 @@
     }
 
     .container {
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
-      padding: 20px;
+      padding: 20px 15px 40px;
     }
 
-    h1 {
+    .header {
       text-align: center;
+      padding: 20px 0;
     }
 
-    .card {
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .header p {
+      color: #777;
+      margin-top: 8px;
+    }
+
+    .day {
+      margin-top: 25px;
+    }
+
+    .day-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .timeline {
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 75px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #ddd;
+    }
+
+    .item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 65px 1fr;
+      gap: 25px;
+      margin-bottom: 18px;
+    }
+
+    .time {
+      font-size: 13px;
+      font-weight: bold;
+      color: #666;
+      text-align: right;
+      padding-top: 3px;
+    }
+
+    .content {
+      position: relative;
       background: white;
-      border-radius: 16px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+
+    .content::before {
+      content: "";
+      position: absolute;
+      left: -31px;
+      top: 16px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #222;
+      border: 3px solid #f5f6f8;
+    }
+
+    .location {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .detail {
+      white-space: pre-line;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .note {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #eee;
+      font-size: 13px;
+      color: #888;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px 10px;
+      color: #777;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #c00;
+      padding: 15px;
+      border-radius: 12px;
       margin-top: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
+  <div class="header">
     <h1>🏕️ An Giang Trip</h1>
-
-    <div class="card">
-      <h2>🗺️ Lịch trình</h2>
-      <p>Đang tải...</p>
-    </div>
-
-    <div class="card">
-      <h2>👥 Thành viên</h2>
-      <p>Đang tải...</p>
-    </div>
-
-    <div class="card">
-      <h2>💰 Chi tiêu</h2>
-      <p>Đang tải...</p>
-    </div>
-
-    <div class="card">
-      <h2>🎒 Checklist</h2>
-      <p>Đang tải...</p>
-    </div>
-
+    <p>10/10 → 11/10/2026</p>
   </div>
-  <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbzjrWg18zOpry0s4GlxBhyVT2OvdiCU4p6w6DFTR4lNqJTsp6aw_mbt6nJecV60GCVx/exec';
-  
-    async function loadData() {
-      try {
-        const response = await fetch(API_URL + '?action=all');
-        const data = await response.json();
-  
-        console.log('Dữ liệu Google Sheet:', data);
-  
-        document.querySelector('.card:nth-of-type(1) p').textContent =
-          `Đã tải ${data.schedule.rows.length} dòng lịch trình`;
-  
-        document.querySelector('.card:nth-of-type(2) p').textContent =
-          `Đã tải ${data.members.rows.length - 1} thành viên`;
-  
-        document.querySelector('.card:nth-of-type(3) p').textContent =
-          `Đã tải ${data.expenses.rows.length - 1} khoản chi`;
-  
-        document.querySelector('.card:nth-of-type(4) p').textContent =
-          `Đã tải ${data.checklist.rows.length} món checklist`;
-  
-      } catch (error) {
-        console.error(error);
-      }
+
+  <div id="schedule">
+    <div class="loading">Đang tải lịch trình...</div>
+  </div>
+
+</div>
+
+
+<script>
+
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbzjrWg18zOpry0s4GlxBhyVT2OvdiCU4p6w6DFTR4lNqJTsp6aw_mbt6nJecV60GCVx/exec';
+
+
+async function loadSchedule() {
+
+  const container = document.getElementById('schedule');
+
+  try {
+
+    const response = await fetch(API_URL + '?action=schedule');
+
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error('Không đọc được lịch trình');
     }
-  
-    loadData();
-  </script>
+
+    renderSchedule(data.rows);
+
+  } catch (error) {
+
+    container.innerHTML = `
+      <div class="error">
+        Không thể tải lịch trình.
+      </div>
+    `;
+
+    console.error(error);
+  }
+}
+
+
+function renderSchedule(rows) {
+
+  const container = document.getElementById('schedule');
+
+  let html = '';
+  let currentDay = null;
+
+  rows.forEach((row, index) => {
+
+    // Bỏ dòng tiêu đề
+    if (index === 0) return;
+
+    const time = row[0] || '';
+    const location = row[1] || '';
+    const detail = row[2] || '';
+    const note = row[5] || '';
+
+    // DAY 1 / DAY 2
+    if (String(time).startsWith('DAY')) {
+
+      currentDay = time;
+
+      html += `
+        <div class="day">
+          <div class="day-title">${currentDay}</div>
+          <div class="timeline">
+      `;
+
+      return;
+    }
+
+    // Bỏ dòng trống
+    if (!time && !location && !detail) return;
+
+    html += `
+      <div class="item">
+
+        <div class="time">
+          ${time}
+        </div>
+
+        <div class="content">
+
+          ${location
+            ? `<div class="location">📍 ${location}</div>`
+            : ''
+          }
+
+          <div class="detail">
+            ${detail}
+          </div>
+
+          ${note
+            ? `<div class="note">💬 ${note}</div>`
+            : ''
+          }
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  // Đóng timeline
+  html += `</div></div>`;
+
+  container.innerHTML = html;
+}
+
+
+loadSchedule();
+
+</script>
+
 </body>
 </html>
