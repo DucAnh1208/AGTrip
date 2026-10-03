@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AG Trip</title>
+  <title>An Giang Trip</title>
 
   <style>
     * {
@@ -14,72 +14,67 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f6f8;
-      color: #222;
+      background: #f4f6f8;
+      color: #1f2937;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
 
-    header {
+    button {
+      cursor: pointer;
+    }
+
+    /* HEADER */
+
+    .header {
       background: #166534;
       color: white;
-      padding: 16px;
-      text-align: center;
+      padding: 18px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 20;
     }
 
-    header h1 {
-      margin: 0;
+    .header-inner {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      opacity: .85;
+      margin-top: 4px;
+    }
+
+    .refresh-btn {
+      border: 0;
+      background: rgba(255,255,255,.18);
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
       font-size: 22px;
     }
 
-    header p {
-      margin: 5px 0 0;
-      font-size: 13px;
-      opacity: 0.9;
-    }
-
-    /* =========================
-       NAV
-    ========================= */
-
-    nav {
-      display: flex;
-      background: white;
-      border-bottom: 1px solid #ddd;
-      position: sticky;
-      top: 67px;
-      z-index: 90;
-    }
-
-    nav button {
-      flex: 1;
-      border: 0;
-      background: white;
-      padding: 13px 5px;
-      font-size: 14px;
-      cursor: pointer;
-      color: #555;
-    }
-
-    nav button.active {
-      color: #166534;
-      font-weight: bold;
-      border-bottom: 3px solid #166534;
-    }
-
-    /* =========================
-       MAIN
-    ========================= */
+    /* MAIN */
 
     main {
       max-width: 900px;
       margin: auto;
-      padding: 15px;
+      padding: 15px 14px 90px;
     }
 
     .tab {
@@ -90,191 +85,162 @@
       display: block;
     }
 
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
     .section-title {
-      margin: 5px 0 12px;
-      font-size: 20px;
-      font-weight: bold;
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px 10px;
+      color: #777;
     }
 
     .empty {
       background: white;
-      padding: 20px;
-      border-radius: 10px;
+      border-radius: 14px;
+      padding: 30px;
       text-align: center;
-      color: #888;
+      color: #999;
     }
 
-    /* =========================
-       SCHEDULE
-    ========================= */
+    /* SCHEDULE */
 
     .day-title {
-      background: #166534;
-      color: white;
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin: 18px 0 8px;
+      background: #dcfce7;
+      color: #166534;
+      padding: 12px 14px;
+      border-radius: 13px;
       font-weight: bold;
+      margin: 10px 0;
     }
 
     .schedule-card {
       background: white;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 9px;
+      border-left: 4px solid #22c55e;
+      box-shadow: 0 2px 7px rgba(0,0,0,.05);
     }
 
     .schedule-time {
+      color: #16a34a;
+      font-size: 13px;
       font-weight: bold;
-      color: #166534;
-      margin-bottom: 4px;
     }
 
-    .schedule-place {
+    .schedule-location {
       font-weight: bold;
-      margin-bottom: 5px;
+      font-size: 16px;
+      margin: 5px 0;
     }
 
     .schedule-detail {
-      white-space: pre-line;
+      color: #4b5563;
+      font-size: 14px;
       line-height: 1.5;
-      color: #444;
+      white-space: pre-line;
     }
 
-    /* =========================
-       MEMBERS
-    ========================= */
+    .schedule-note {
+      background: #fff7ed;
+      color: #9a3412;
+      padding: 8px;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    /* MEMBERS */
 
     .member-card {
-      display: grid;
-
-      /*
-        STT | TÊN | NOTE | SAVE
-      */
-      grid-template-columns:
-        32px
-        80px
-        minmax(0, 1fr)
-        42px;
-
-      column-gap: 10px;
-
-      align-items: center;
-
       background: white;
-      border-radius: 12px;
-
-      padding: 10px 12px;
-      margin-bottom: 8px;
-
-      box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
+      border-radius: 14px;
+      padding: 13px;
+      margin-bottom: 9px;
+      box-shadow: 0 2px 7px rgba(0,0,0,.05);
     }
 
-    /* STT */
+    .member-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
 
     .member-number {
-      text-align: center;
-      font-weight: bold;
-      color: #777;
-      justify-self: center;
-    }
-
-    /* TÊN */
-
-    .member-name {
-      min-width: 0;
-
-      font-weight: 600;
-
-      overflow-wrap: anywhere;
-
-      /*
-        Quan trọng:
-        Khi Note cao lên thì Tên vẫn nằm giữa.
-      */
-      align-self: center;
-    }
-
-    /* NOTE */
-
-    .member-note {
-      width: 100%;
-      min-width: 0;
-
-      min-height: 36px;
-
-      padding: 8px 9px;
-
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-
-      background: white;
-
-      outline: none;
-
-      font-family: inherit;
-      font-size: 14px;
-      line-height: 1.4;
-
-      resize: vertical;
-
-      overflow-wrap: anywhere;
-    }
-
-    .member-note:focus {
-      border-color: #166534;
-      box-shadow: 0 0 0 2px rgba(22, 101, 52, 0.08);
-    }
-
-    /* SAVE */
-
-    .save-member {
-      width: 38px;
-      height: 36px;
-
-      border: 0;
-      border-radius: 8px;
-
-      background: #166534;
-      color: white;
-
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #166534;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
 
-      padding: 0;
-
+    .member-name {
       font-size: 16px;
-
-      cursor: pointer;
-
-      justify-self: center;
-      align-self: center;
+      font-weight: bold;
     }
 
-    .save-member:hover {
-      background: #14532d;
+    .note-input {
+      width: 100%;
+      padding: 9px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      outline: none;
     }
 
-    .save-member:disabled {
-      opacity: 0.7;
-      cursor: default;
+    .save-member {
+      margin-top: 8px;
+      border: 0;
+      background: #166534;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
     }
 
-    /* =========================
-       EXPENSE
-    ========================= */
+    /* EXPENSE */
+
+    .expense-summary {
+      background: #166534;
+      color: white;
+      border-radius: 15px;
+      padding: 17px;
+      margin-bottom: 15px;
+    }
+
+    .expense-summary-label {
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    .expense-total {
+      font-size: 27px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
 
     .expense-card {
       background: white;
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      border-radius: 13px;
+      padding: 13px;
+      margin-bottom: 9px;
     }
 
-    .expense-main {
+    .expense-top {
       display: flex;
       justify-content: space-between;
       gap: 10px;
@@ -285,1237 +251,1513 @@
     }
 
     .expense-amount {
+      color: #dc2626;
       font-weight: bold;
-      color: #166534;
       white-space: nowrap;
     }
 
-    .expense-info {
-      margin-top: 5px;
-      color: #666;
-      font-size: 13px;
-      line-height: 1.5;
+    .expense-meta {
+      color: #777;
+      font-size: 12px;
+      margin-top: 6px;
     }
 
-    .add-box {
+    .expense-note {
+      color: #555;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    /* BUTTON */
+
+    .add-btn {
+      border: 0;
+      background: #166534;
+      color: white;
+      padding: 9px 13px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    /* FORM */
+
+    .form-card {
       background: white;
-      padding: 12px;
-      border-radius: 10px;
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-title {
+      font-weight: bold;
       margin-bottom: 12px;
     }
 
-    .add-box input,
-    .add-box textarea {
-      width: 100%;
-      padding: 9px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      font-family: inherit;
+    .form-group {
+      margin-bottom: 11px;
     }
 
-    .add-box button {
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 10px;
-      border: 0;
-      border-radius: 8px;
-      background: #166534;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      outline: none;
+      background: white;
     }
 
-    /* =========================
-       CHECKLIST
-    ========================= */
+    .form-group textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
 
-    .checklist-item {
+    .form-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .primary-btn {
+      flex: 1;
+      border: 0;
+      background: #166534;
+      color: white;
+      padding: 10px;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    .secondary-btn {
+      border: 0;
+      background: #e5e7eb;
+      padding: 10px 14px;
+      border-radius: 9px;
+    }
+
+    /* CHECKLIST */
+
+    .checklist-card {
+      background: white;
+      border-radius: 13px;
+      padding: 12px;
+      margin-bottom: 9px;
       display: flex;
       align-items: center;
       gap: 10px;
-
-      background: white;
-      border-radius: 10px;
-
-      padding: 11px 12px;
-      margin-bottom: 8px;
-
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
-    .checklist-item input {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
+    .checklist-card input {
+      width: 20px;
+      height: 20px;
+      accent-color: #16a34a;
     }
 
     .checklist-text {
       flex: 1;
-      min-width: 0;
-      overflow-wrap: anywhere;
     }
 
-    .checklist-text.checked {
+    .checklist-text.done {
+      color: #999;
       text-decoration: line-through;
-      color: #999;
     }
 
-    .delete-checklist {
+    .delete-check {
       border: 0;
-      background: transparent;
-      color: #999;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    /* =========================
-       REFRESH
-    ========================= */
-
-    .refresh-btn {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-
-      border: 0;
+      background: #fee2e2;
+      color: #dc2626;
+      width: 31px;
+      height: 31px;
       border-radius: 8px;
-
-      background: #e5e7eb;
-      color: #333;
-
-      cursor: pointer;
     }
 
-    .refresh-btn:hover {
-      background: #d1d5db;
+    /* NAV */
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 68px;
+      background: white;
+      border-top: 1px solid #ddd;
+      z-index: 30;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    .nav-inner {
+      max-width: 900px;
+      height: 100%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
 
-    @media (max-width: 500px) {
+    .nav-btn {
+      border: 0;
+      background: white;
+      color: #999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+    }
 
-      main {
-        padding: 10px;
-      }
+    .nav-icon {
+      font-size: 21px;
+    }
 
-      .member-card {
-        grid-template-columns:
-          28px
-          62px
-          minmax(0, 1fr)
-          38px;
-
-        column-gap: 7px;
-
-        padding: 9px;
-      }
-
-      .member-number {
-        font-size: 13px;
-      }
-
-      .member-name {
-        font-size: 14px;
-      }
-
-      .member-note {
-        font-size: 14px;
-      }
-
-      .save-member {
-        width: 36px;
-        height: 36px;
-      }
+    .nav-btn.active {
+      color: #166534;
+      font-weight: bold;
     }
   </style>
 </head>
 
+
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================= -->
+<header class="header">
+  <div class="header-inner">
 
-  <header>
-    <h1>AG Trip</h1>
-    <p>An Giang 2026</p>
-  </header>
+    <div>
+      <div class="title">🌴 AG Trip</div>
+      <div class="subtitle">An Giang • 10–11/10/2026</div>
+    </div>
+
+    <button class="refresh-btn" onclick="loadAll()">
+      ↻
+    </button>
+
+  </div>
+</header>
 
 
-  <!-- =========================
-       NAV
-  ========================= -->
+<main>
 
-  <nav>
-    <button class="nav-btn active" onclick="showTab('schedule', this)">
+  <!-- LỊCH TRÌNH -->
+  <section id="tab-schedule" class="tab active">
+
+    <div class="section-header">
+      <h2 class="section-title">🗺️ Lịch trình</h2>
+    </div>
+
+    <div id="schedule-content">
+      <div class="loading">Đang tải...</div>
+    </div>
+
+  </section>
+
+
+  <!-- THÀNH VIÊN -->
+  <section id="tab-members" class="tab">
+
+    <div class="section-header">
+      <h2 class="section-title">👥 Thành viên</h2>
+    </div>
+
+    <div id="members-content">
+      <div class="loading">Đang tải...</div>
+    </div>
+
+  </section>
+
+
+  <!-- CHI TIÊU -->
+  <section id="tab-expenses" class="tab">
+
+    <div class="section-header">
+
+      <h2 class="section-title">💰 Chi tiêu</h2>
+
+      <button class="add-btn" onclick="showExpenseForm()">
+        + Thêm
+      </button>
+
+    </div>
+
+    <div id="expense-form-container"></div>
+
+    <div id="expenses-content">
+      <div class="loading">Đang tải...</div>
+    </div>
+
+  </section>
+
+
+  <!-- CHECKLIST -->
+  <section id="tab-checklist" class="tab">
+
+    <div class="section-header">
+
+      <h2 class="section-title">🎒 Checklist</h2>
+
+      <button class="add-btn" onclick="showChecklistForm()">
+        + Thêm
+      </button>
+
+    </div>
+
+    <div id="checklist-form-container"></div>
+
+    <div id="checklist-content">
+      <div class="loading">Đang tải...</div>
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- NAV -->
+
+<nav class="bottom-nav">
+
+  <div class="nav-inner">
+
+    <button
+      class="nav-btn active"
+      onclick="switchTab('schedule', this)"
+    >
+      <span class="nav-icon">🗺️</span>
       Lịch trình
     </button>
 
-    <button class="nav-btn" onclick="showTab('members', this)">
+    <button
+      class="nav-btn"
+      onclick="switchTab('members', this)"
+    >
+      <span class="nav-icon">👥</span>
       Thành viên
     </button>
 
-    <button class="nav-btn" onclick="showTab('expenses', this)">
+    <button
+      class="nav-btn"
+      onclick="switchTab('expenses', this)"
+    >
+      <span class="nav-icon">💰</span>
       Chi tiêu
     </button>
 
-    <button class="nav-btn" onclick="showTab('checklist', this)">
+    <button
+      class="nav-btn"
+      onclick="switchTab('checklist', this)"
+    >
+      <span class="nav-icon">🎒</span>
       Checklist
     </button>
-  </nav>
+
+  </div>
+
+</nav>
 
 
-  <!-- =========================
-       MAIN
-  ========================= -->
+<script>
 
-  <main>
-
-    <button class="refresh-btn" onclick="loadAll()">
-      🔄 Tải lại dữ liệu
-    </button>
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbzjrWg18zOpry0s4GlxBhyVT2OvdiCU4p6w6DFTR4lNqJTsp6aw_mbt6nJecV60GCVx/exec';
 
 
-    <!-- =========================
-         LỊCH TRÌNH
-    ========================= -->
+let appData = {
+  schedule: [],
+  members: [],
+  expenses: [],
+  checklist: []
+};
 
-    <section id="schedule" class="tab active">
 
-      <div class="section-title">
-        📅 Lịch trình
+/* =========================
+   LOAD
+========================= */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  loadAll
+);
+
+
+async function loadAll() {
+
+  try {
+
+    const response =
+      await fetch(API_URL + '?action=all');
+
+    const data =
+      await response.json();
+
+
+    console.log('API:', data);
+
+
+    if (!data.success) {
+      throw new Error(
+        data.error || 'API error'
+      );
+    }
+
+
+    appData.schedule =
+      data.schedule &&
+      data.schedule.rows
+        ? data.schedule.rows
+        : [];
+
+
+    appData.members =
+      data.members &&
+      data.members.rows
+        ? data.members.rows
+        : [];
+
+
+    appData.expenses =
+      data.expenses &&
+      data.expenses.rows
+        ? data.expenses.rows
+        : [];
+
+
+    appData.checklist =
+      data.checklist &&
+      data.checklist.rows
+        ? data.checklist.rows
+        : [];
+
+
+    renderSchedule();
+    renderMembers();
+    renderExpenses();
+    renderChecklist();
+
+
+  } catch (error) {
+
+    console.error(
+      'LOAD ERROR:',
+      error
+    );
+
+
+    document.getElementById(
+      'schedule-content'
+    ).innerHTML =
+      '<div class="empty">Không tải được dữ liệu.</div>';
+
+
+    document.getElementById(
+      'members-content'
+    ).innerHTML =
+      '<div class="empty">Không tải được dữ liệu.</div>';
+
+
+    document.getElementById(
+      'expenses-content'
+    ).innerHTML =
+      '<div class="empty">Không tải được dữ liệu.</div>';
+
+
+    document.getElementById(
+      'checklist-content'
+    ).innerHTML =
+      '<div class="empty">Không tải được dữ liệu.</div>';
+  }
+}
+
+
+/* =========================
+   TAB
+========================= */
+
+function switchTab(name, button) {
+
+  document
+    .querySelectorAll('.tab')
+    .forEach(
+      x => x.classList.remove('active')
+    );
+
+
+  document
+    .getElementById(
+      'tab-' + name
+    )
+    .classList.add('active');
+
+
+  document
+    .querySelectorAll('.nav-btn')
+    .forEach(
+      x => x.classList.remove('active')
+    );
+
+
+  button.classList.add('active');
+}
+
+
+/* =========================
+   SCHEDULE
+========================= */
+
+function renderSchedule() {
+
+  const box =
+    document.getElementById(
+      'schedule-content'
+    );
+
+
+  let html = '';
+
+
+  for (
+    let i = 1;
+    i < appData.schedule.length;
+    i++
+  ) {
+
+    const row =
+      appData.schedule[i];
+
+
+    if (!row) continue;
+
+
+    const time =
+      String(row[0] ?? '').trim();
+
+    const location =
+      String(row[1] ?? '').trim();
+
+    const detail =
+      String(row[2] ?? '').trim();
+
+    const note =
+      String(row[5] ?? '').trim();
+
+
+    if (
+      !time &&
+      !location &&
+      !detail
+    ) {
+      continue;
+    }
+
+
+    if (
+      time.toUpperCase()
+        .startsWith('DAY')
+    ) {
+
+      html +=
+        '<div class="day-title">' +
+        escapeHtml(time) +
+        '</div>';
+
+      continue;
+    }
+
+
+    html += `
+      <div class="schedule-card">
+
+        <div class="schedule-time">
+          ${escapeHtml(time)}
+        </div>
+
+        <div class="schedule-location">
+          ${escapeHtml(location)}
+        </div>
+
+        <div class="schedule-detail">
+          ${escapeHtml(detail)}
+        </div>
+
+        ${
+          note
+            ? `
+              <div class="schedule-note">
+                📝 ${escapeHtml(note)}
+              </div>
+            `
+            : ''
+        }
+
       </div>
-
-      <div id="schedule-content">
-        Đang tải...
-      </div>
-
-    </section>
+    `;
+  }
 
 
-    <!-- =========================
-         THÀNH VIÊN
-    ========================= -->
-
-    <section id="members" class="tab">
-
-      <div class="section-title">
-        👥 Thành viên
-      </div>
-
-      <div id="members-content">
-        Đang tải...
-      </div>
-
-    </section>
+  box.innerHTML =
+    html ||
+    '<div class="empty">Chưa có lịch trình.</div>';
+}
 
 
-    <!-- =========================
-         CHI TIÊU
-    ========================= -->
+/* =========================
+   MEMBERS
+========================= */
 
-    <section id="expenses" class="tab">
+function renderMembers() {
 
-      <div class="section-title">
-        💰 Chi tiêu
-      </div>
+  const box =
+    document.getElementById(
+      'members-content'
+    );
 
 
-      <div class="add-box">
+  let html = '';
+  let number = 1;
+
+
+  for (
+    let i = 1;
+    i < appData.members.length;
+    i++
+  ) {
+
+    const row =
+      appData.members[i];
+
+
+    if (!row) continue;
+
+
+    const name =
+      String(row[1] ?? '').trim();
+
+
+    if (!name) continue;
+
+
+    const note =
+      String(row[2] ?? '');
+
+
+    const sheetRow =
+      i + 1;
+
+
+    html += `
+      <div
+        class="member-card"
+        data-row="${sheetRow}"
+      >
+
+        <div class="member-row">
+
+          <div class="member-number">
+            ${number}
+          </div>
+
+          <div class="member-name">
+            ${escapeHtml(name)}
+          </div>
+
+        </div>
+
 
         <input
-          id="expense-description"
-          type="text"
-          placeholder="Nội dung"
+          class="note-input member-note"
+          value="${escapeAttribute(note)}"
+          placeholder="Note..."
         >
 
-        <input
-          id="expense-amount"
-          type="number"
-          placeholder="Số tiền"
+
+        <button
+          class="save-member"
+          onclick="saveMember(this)"
         >
-
-        <input
-          id="expense-payer"
-          type="text"
-          placeholder="Người trả"
-        >
-
-        <textarea
-          id="expense-note"
-          rows="2"
-          placeholder="Ghi chú"
-        ></textarea>
-
-        <button onclick="addExpense()">
-          + Thêm khoản chi
+          💾 Lưu
         </button>
 
       </div>
+    `;
 
 
-      <div id="expenses-content">
-        Đang tải...
-      </div>
-
-    </section>
+    number++;
+  }
 
 
-    <!-- =========================
-         CHECKLIST
-    ========================= -->
-
-    <section id="checklist" class="tab">
-
-      <div class="section-title">
-        ✅ Checklist
-      </div>
+  box.innerHTML =
+    html ||
+    '<div class="empty">Chưa có thành viên.</div>';
+}
 
 
-      <div class="add-box">
+async function saveMember(button) {
 
-        <input
-          id="checklist-input"
-          type="text"
-          placeholder="Thêm checklist..."
-        >
-
-        <button onclick="addChecklist()">
-          + Thêm
-        </button>
-
-      </div>
+  const card =
+    button.closest('.member-card');
 
 
-      <div id="checklist-content">
-        Đang tải...
-      </div>
-
-    </section>
-
-  </main>
+  const row =
+    Number(card.dataset.row);
 
 
-  <script>
-
-    /* =========================
-       API
-    ========================= */
-
-    const API_URL =
-      'https://script.google.com/macros/s/AKfycbzjrWg18zOpry0s4GlxBhyVT2OvdiCU4p6w6DFTR4lNqJTsp6aw_mbt6nJecV60GCVx/exec';
+  const note =
+    card.querySelector(
+      '.member-note'
+    ).value;
 
 
-    /* =========================
-       DATA
-    ========================= */
-
-    let appData = {
-      schedule: [],
-      members: [],
-      expenses: [],
-      checklist: []
-    };
+  button.disabled = true;
+  button.textContent = 'Đang lưu...';
 
 
-    /* =========================
-       ESCAPE HTML
-    ========================= */
+  try {
 
-    function escapeHtml(value) {
+    const response =
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          action: 'updateMember',
+          row: row,
+          note: note
+        })
+      });
 
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
 
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.error || 'Lỗi'
+      );
     }
 
 
-    /* =========================
-       TAB
-    ========================= */
+    button.textContent = '✓ Đã lưu';
 
-    function showTab(tabId, button) {
 
-      document.querySelectorAll('.tab')
-        .forEach(tab => tab.classList.remove('active'));
-
-      document.querySelectorAll('.nav-btn')
-        .forEach(btn => btn.classList.remove('active'));
-
-      document.getElementById(tabId)
-        .classList.add('active');
-
-      button.classList.add('active');
-
-    }
-
-
-    /* =========================
-       LOAD ALL
-    ========================= */
-
-    async function loadAll() {
-
-      try {
-
-        const response = await fetch(
-          API_URL + '?action=all'
-        );
-
-        const result = await response.json();
-
-        if (!result.success) {
-          throw new Error(result.error || 'Không tải được dữ liệu');
-        }
-
-        appData.schedule =
-          result.schedule?.rows || [];
-
-        appData.members =
-          result.members?.rows || [];
-
-        appData.expenses =
-          result.expenses?.rows || [];
-
-        appData.checklist =
-          result.checklist?.rows || [];
-
-
-        renderSchedule();
-        renderMembers();
-        renderExpenses();
-        renderChecklist();
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          'Không tải được dữ liệu. Kiểm tra Apps Script hoặc thử tải lại trang.'
-        );
-
-      }
-
-    }
-
-
-    /* =========================
-       SCHEDULE
-    ========================= */
-
-    function renderSchedule() {
-
-      const box =
-        document.getElementById('schedule-content');
-
-      let html = '';
-
-      let currentDay = '';
-
-      for (
-        let i = 1;
-        i < appData.schedule.length;
-        i++
-      ) {
-
-        const row = appData.schedule[i];
-
-        if (!row) continue;
-
-        const time =
-          String(row[0] ?? '').trim();
-
-        const place =
-          String(row[1] ?? '').trim();
-
-        const detail =
-          String(row[2] ?? '').trim();
-
-
-        if (time === 'DAY 1' || time === 'DAY 2') {
-
-          currentDay = time;
-
-          html += `
-            <div class="day-title">
-              ${escapeHtml(time)}
-            </div>
-          `;
-
-          continue;
-
-        }
-
-
-        if (
-          !time &&
-          !place &&
-          !detail
-        ) {
-          continue;
-        }
-
-
-        html += `
-          <div class="schedule-card">
-
-            <div class="schedule-time">
-              ${escapeHtml(time)}
-            </div>
-
-            <div class="schedule-place">
-              ${escapeHtml(place)}
-            </div>
-
-            <div class="schedule-detail">
-              ${escapeHtml(detail)}
-            </div>
-
-          </div>
-        `;
-
-      }
-
-
-      box.innerHTML =
-        html ||
-        '<div class="empty">Chưa có lịch trình.</div>';
-
-    }
-
-
-    /* =========================
-       MEMBERS
-    ========================= */
-
-    function renderMembers() {
-
-      const box =
-        document.getElementById('members-content');
-
-      let html = '';
-
-      let number = 1;
-
-
-      /*
-        Bỏ header dòng 1.
-        Chỉ hiển thị những dòng
-        có tên thành viên.
-      */
-
-      for (
-        let i = 1;
-        i < appData.members.length;
-        i++
-      ) {
-
-        const row =
-          appData.members[i];
-
-        if (!row) continue;
-
-
-        const name =
-          String(row[1] ?? '').trim();
-
-        if (!name) continue;
-
-
-        const note =
-          String(row[2] ?? '');
-
-
-        /*
-          i = index trong mảng
-          sheet row = i + 1
-        */
-
-        const sheetRow =
-          i + 1;
-
-
-        html += `
-          <div
-            class="member-card"
-            data-row="${sheetRow}"
-          >
-
-            <div class="member-number">
-              ${number}
-            </div>
-
-            <div class="member-name">
-              ${escapeHtml(name)}
-            </div>
-
-            <textarea
-              class="member-note"
-              placeholder="Note..."
-              rows="1"
-            >${escapeHtml(note)}</textarea>
-
-            <button
-              class="save-member"
-              onclick="saveMember(this)"
-              title="Lưu"
-            >
-              💾
-            </button>
-
-          </div>
-        `;
-
-
-        number++;
-
-      }
-
-
-      box.innerHTML =
-        html ||
-        '<div class="empty">Chưa có thành viên.</div>';
-
-    }
-
-
-    /* =========================
-       SAVE MEMBER
-    ========================= */
-
-    async function saveMember(button) {
-
-      const card =
-        button.closest('.member-card');
-
-      const row =
-        Number(card.dataset.row);
-
-      const note =
-        card.querySelector('.member-note').value;
-
-
-      button.disabled = true;
-      button.textContent = '...';
-
-
-      try {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: 'POST',
-
-            headers: {
-              'Content-Type':
-                'text/plain;charset=utf-8'
-            },
-
-            body: JSON.stringify({
-
-              action: 'updateMember',
-
-              row: row,
-
-              note: note
-
-            })
-
-          });
-
-
-        const result =
-          await response.json();
-
-
-        if (!result.success) {
-
-          throw new Error(
-            result.error || 'Lỗi'
-          );
-
-        }
-
-
-        button.textContent = '✓';
-
-
-        setTimeout(() => {
-
-          button.textContent = '💾';
-
-          button.disabled = false;
-
-        }, 1000);
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          'Không lưu được ghi chú.'
-        );
-
-        button.textContent = '💾';
-
+    setTimeout(
+      () => {
+        button.textContent = '💾 Lưu';
         button.disabled = false;
+      },
+      1000
+    );
 
-      }
 
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      'Không lưu được ghi chú.'
+    );
+
+    button.textContent = '💾 Lưu';
+    button.disabled = false;
+  }
+}
+
+
+/* =========================
+   EXPENSES
+========================= */
+
+function renderExpenses() {
+
+  const box =
+    document.getElementById(
+      'expenses-content'
+    );
+
+
+  let total = 0;
+  let html = '';
+
+
+  for (
+    let i = 1;
+    i < appData.expenses.length;
+    i++
+  ) {
+
+    const row =
+      appData.expenses[i];
+
+
+    if (!row) continue;
+
+
+    const time =
+      row[0] ?? '';
+
+    const description =
+      String(row[1] ?? '').trim();
+
+    const amount =
+      Number(row[2]) || 0;
+
+    const payer =
+      String(row[3] ?? '').trim();
+
+    const note =
+      String(row[4] ?? '').trim();
+
+
+    if (
+      !description &&
+      !amount &&
+      !payer
+    ) {
+      continue;
     }
 
 
-    /* =========================
-       EXPENSES
-    ========================= */
-
-    function renderExpenses() {
-
-      const box =
-        document.getElementById('expenses-content');
-
-      let html = '';
+    total += amount;
 
 
-      /*
-        Sheet:
-        Thời gian | Nội dung | Số tiền | Người trả | Ghi chú
-      */
+    html += `
+      <div class="expense-card">
 
-      for (
-        let i = 1;
-        i < appData.expenses.length;
-        i++
-      ) {
+        <div class="expense-top">
 
-        const row =
-          appData.expenses[i];
-
-        if (!row) continue;
-
-
-        const time =
-          String(row[0] ?? '');
-
-        const description =
-          String(row[1] ?? '');
-
-        const amount =
-          Number(row[2] ?? 0);
-
-        const payer =
-          String(row[3] ?? '');
-
-        const note =
-          String(row[4] ?? '');
-
-
-        if (
-          !description &&
-          !amount &&
-          !payer &&
-          !note
-        ) {
-          continue;
-        }
-
-
-        html += `
-          <div class="expense-card">
-
-            <div class="expense-main">
-
-              <div class="expense-description">
-                ${escapeHtml(description)}
-              </div>
-
-              <div class="expense-amount">
-                ${amount.toLocaleString('vi-VN')} đ
-              </div>
-
-            </div>
-
-            <div class="expense-info">
-
-              Người trả:
-              ${escapeHtml(payer)}
-
-              ${
-                note
-                  ? `<br>Ghi chú: ${escapeHtml(note)}`
-                  : ''
-              }
-
-              ${
-                time
-                  ? `<br>${escapeHtml(time)}`
-                  : ''
-              }
-
-            </div>
-
+          <div class="expense-description">
+            ${escapeHtml(
+              description || 'Khoản chi'
+            )}
           </div>
-        `;
 
-      }
+          <div class="expense-amount">
+            ${formatMoney(amount)}
+          </div>
 
+        </div>
 
-      box.innerHTML =
-        html ||
-        '<div class="empty">Chưa có khoản chi.</div>';
+        <div class="expense-meta">
+          ${escapeHtml(
+            formatDateTime(time)
+          )}
+          ${
+            payer
+              ? ' • ' +
+                escapeHtml(payer)
+              : ''
+          }
+        </div>
 
-    }
-
-
-    /* =========================
-       ADD EXPENSE
-    ========================= */
-
-    async function addExpense() {
-
-      const description =
-        document.getElementById(
-          'expense-description'
-        ).value.trim();
-
-      const amount =
-        document.getElementById(
-          'expense-amount'
-        ).value;
-
-      const payer =
-        document.getElementById(
-          'expense-payer'
-        ).value.trim();
-
-      const note =
-        document.getElementById(
-          'expense-note'
-        ).value.trim();
-
-
-      if (!description) {
-
-        alert('Nhập nội dung khoản chi.');
-
-        return;
-
-      }
-
-
-      try {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: 'POST',
-
-            headers: {
-              'Content-Type':
-                'text/plain;charset=utf-8'
-            },
-
-            body: JSON.stringify({
-
-              action: 'addExpense',
-
-              description: description,
-
-              amount: amount,
-
-              payer: payer,
-
-              note: note
-
-            })
-
-          });
-
-
-        const result =
-          await response.json();
-
-
-        if (!result.success) {
-
-          throw new Error(
-            result.error || 'Lỗi'
-          );
-
+        ${
+          note
+            ? `
+              <div class="expense-note">
+                ${escapeHtml(note)}
+              </div>
+            `
+            : ''
         }
 
-
-        document.getElementById(
-          'expense-description'
-        ).value = '';
-
-        document.getElementById(
-          'expense-amount'
-        ).value = '';
-
-        document.getElementById(
-          'expense-payer'
-        ).value = '';
-
-        document.getElementById(
-          'expense-note'
-        ).value = '';
+      </div>
+    `;
+  }
 
 
-        await loadAll();
+  box.innerHTML = `
 
+    <div class="expense-summary">
 
-      } catch (error) {
+      <div class="expense-summary-label">
+        Tổng chi tiêu
+      </div>
 
-        console.error(error);
+      <div class="expense-total">
+        ${formatMoney(total)}
+      </div>
 
-        alert(
-          'Không thêm được khoản chi.'
-        );
+    </div>
 
-      }
-
+    ${
+      html ||
+      '<div class="empty">Chưa có khoản chi nào.</div>'
     }
 
-
-    /* =========================
-       CHECKLIST
-    ========================= */
-
-    function renderChecklist() {
-
-      const box =
-        document.getElementById(
-          'checklist-content'
-        );
-
-      let html = '';
+  `;
+}
 
 
-      for (
-        let i = 0;
-        i < appData.checklist.length;
-        i++
-      ) {
+/* =========================
+   EXPENSE FORM
+========================= */
 
-        const row =
-          appData.checklist[i];
+function showExpenseForm() {
 
-        if (!row) continue;
-
-
-        let value =
-          String(row[0] ?? '').trim();
+  const box =
+    document.getElementById(
+      'expense-form-container'
+    );
 
 
-        if (!value) continue;
+  let options =
+    '<option value="">-- Người trả --</option>';
 
 
-        const checked =
-          value.startsWith('✓ ');
+  for (
+    let i = 1;
+    i < appData.members.length;
+    i++
+  ) {
+
+    const name =
+      String(
+        appData.members[i]?.[1] ?? ''
+      ).trim();
 
 
-        const displayText =
-          checked
-            ? value.substring(2)
-            : value;
+    if (name) {
+
+      options += `
+        <option value="${escapeAttribute(name)}">
+          ${escapeHtml(name)}
+        </option>
+      `;
+    }
+  }
 
 
-        const sheetRow =
-          i + 1;
+  box.innerHTML = `
 
+    <div class="form-card">
 
-        html += `
-          <div
-            class="checklist-item"
-            data-row="${sheetRow}"
+      <div class="form-title">
+        ➕ Thêm khoản chi
+      </div>
+
+      <form onsubmit="submitExpense(event)">
+
+        <div class="form-group">
+
+          <label>Thời gian</label>
+
+          <input
+            id="expense-time"
+            type="datetime-local"
+            value="${getCurrentDateTime()}"
           >
 
-            <input
-              type="checkbox"
-              ${checked ? 'checked' : ''}
-              onchange="toggleChecklist(this)"
-            >
-
-            <div
-              class="checklist-text ${
-                checked ? 'checked' : ''
-              }"
-            >
-              ${escapeHtml(displayText)}
-            </div>
-
-            <button
-              class="delete-checklist"
-              onclick="deleteChecklist(this)"
-              title="Xóa"
-            >
-              🗑
-            </button>
-
-          </div>
-        `;
-
-      }
+        </div>
 
 
-      box.innerHTML =
-        html ||
-        '<div class="empty">Chưa có checklist.</div>';
+        <div class="form-group">
 
-    }
+          <label>Nội dung</label>
+
+          <input
+            id="expense-description"
+            placeholder="Ví dụ: Mua bia"
+            required
+          >
+
+        </div>
 
 
-    /* =========================
-       ADD CHECKLIST
-    ========================= */
+        <div class="form-group">
 
-    async function addChecklist() {
+          <label>Số tiền</label>
 
-      const input =
+          <input
+            id="expense-amount"
+            type="number"
+            min="0"
+            placeholder="500000"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>Người trả</label>
+
+          <select id="expense-payer">
+            ${options}
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>Ghi chú</label>
+
+          <textarea
+            id="expense-note"
+            placeholder="Không bắt buộc"
+          ></textarea>
+
+        </div>
+
+
+        <div class="form-actions">
+
+          <button
+            class="primary-btn"
+            type="submit"
+          >
+            Lưu
+          </button>
+
+          <button
+            class="secondary-btn"
+            type="button"
+            onclick="hideExpenseForm()"
+          >
+            Hủy
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+  `;
+}
+
+
+function hideExpenseForm() {
+
+  document.getElementById(
+    'expense-form-container'
+  ).innerHTML = '';
+}
+
+
+async function submitExpense(event) {
+
+  event.preventDefault();
+
+
+  const data = {
+
+    action: 'addExpense',
+
+    time:
+      document.getElementById(
+        'expense-time'
+      ).value,
+
+    description:
+      document.getElementById(
+        'expense-description'
+      ).value.trim(),
+
+    amount:
+      Number(
         document.getElementById(
-          'checklist-input'
-        );
+          'expense-amount'
+        ).value
+      ),
 
-      const item =
-        input.value.trim();
+    payer:
+      document.getElementById(
+        'expense-payer'
+      ).value,
 
-
-      if (!item) return;
-
-
-      try {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: 'POST',
-
-            headers: {
-              'Content-Type':
-                'text/plain;charset=utf-8'
-            },
-
-            body: JSON.stringify({
-
-              action: 'addChecklist',
-
-              item: item
-
-            })
-
-          });
+    note:
+      document.getElementById(
+        'expense-note'
+      ).value.trim()
+  };
 
 
-        const result =
-          await response.json();
+  try {
+
+    const response =
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+      });
 
 
-        if (!result.success) {
-
-          throw new Error(
-            result.error || 'Lỗi'
-          );
-
-        }
+    const result =
+      await response.json();
 
 
-        input.value = '';
-
-        await loadAll();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          'Không thêm được checklist.'
-        );
-
-      }
-
+    if (!result.success) {
+      throw new Error(
+        result.error || 'Lỗi'
+      );
     }
 
 
-    /* =========================
-       TOGGLE CHECKLIST
-    ========================= */
+    hideExpenseForm();
 
-    async function toggleChecklist(checkbox) {
-
-      const item =
-        checkbox.closest(
-          '.checklist-item'
-        );
-
-      const row =
-        Number(item.dataset.row);
-
-      const text =
-        item.querySelector(
-          '.checklist-text'
-        ).textContent.trim();
+    await loadAll();
 
 
-      const value =
-        checkbox.checked
-          ? '✓ ' + text
-          : text;
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      'Không thêm được khoản chi.'
+    );
+  }
+}
 
 
-      try {
+/* =========================
+   CHECKLIST
+========================= */
 
-        const response =
-          await fetch(API_URL, {
+function renderChecklist() {
 
-            method: 'POST',
-
-            headers: {
-              'Content-Type':
-                'text/plain;charset=utf-8'
-            },
-
-            body: JSON.stringify({
-
-              action: 'updateChecklist',
-
-              row: row,
-
-              value: value
-
-            })
-
-          });
+  const box =
+    document.getElementById(
+      'checklist-content'
+    );
 
 
-        const result =
-          await response.json();
+  let html = '';
 
 
-        if (!result.success) {
+  for (
+    let i = 0;
+    i < appData.checklist.length;
+    i++
+  ) {
 
-          throw new Error(
-            result.error || 'Lỗi'
-          );
-
-        }
-
-
-        item
-          .querySelector('.checklist-text')
-          .classList.toggle(
-            'checked',
-            checkbox.checked
-          );
+    const row =
+      appData.checklist[i];
 
 
-      } catch (error) {
+    if (!row) continue;
 
-        console.error(error);
 
-        checkbox.checked =
-          !checkbox.checked;
+    const raw =
+      String(row[0] ?? '').trim();
 
-        alert(
-          'Không cập nhật được checklist.'
-        );
 
-      }
+    if (!raw) continue;
 
+
+    const checked =
+      raw.startsWith('✓ ');
+
+
+    const text =
+      checked
+        ? raw.substring(2)
+        : raw;
+
+
+    const sheetRow =
+      i + 1;
+
+
+    html += `
+
+      <div class="checklist-card">
+
+        <input
+          type="checkbox"
+          ${checked ? 'checked' : ''}
+          onchange='toggleChecklist(
+            ${sheetRow},
+            this.checked,
+            ${JSON.stringify(text)}
+          )'
+        >
+
+        <div
+          class="checklist-text ${
+            checked ? 'done' : ''
+          }"
+        >
+          ${escapeHtml(text)}
+        </div>
+
+        <button
+          class="delete-check"
+          onclick="deleteChecklist(${sheetRow})"
+        >
+          ×
+        </button>
+
+      </div>
+    `;
+  }
+
+
+  box.innerHTML =
+    html ||
+    '<div class="empty">Chưa có checklist.</div>';
+}
+
+
+async function toggleChecklist(
+  row,
+  checked,
+  text
+) {
+
+  const value =
+    checked
+      ? '✓ ' + text
+      : text;
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          action: 'updateChecklist',
+          row: row,
+          value: value
+        })
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.error || 'Lỗi'
+      );
     }
 
 
-    /* =========================
-       DELETE CHECKLIST
-    ========================= */
-
-    async function deleteChecklist(button) {
-
-      if (
-        !confirm(
-          'Xóa checklist này?'
-        )
-      ) {
-        return;
-      }
+    await loadAll();
 
 
-      const item =
-        button.closest(
-          '.checklist-item'
-        );
+  } catch (error) {
 
-      const row =
-        Number(item.dataset.row);
+    console.error(error);
 
+    alert(
+      'Không cập nhật được checklist.'
+    );
 
-      try {
-
-        const response =
-          await fetch(API_URL, {
-
-            method: 'POST',
-
-            headers: {
-              'Content-Type':
-                'text/plain;charset=utf-8'
-            },
-
-            body: JSON.stringify({
-
-              action: 'deleteChecklist',
-
-              row: row
-
-            })
-
-          });
+    await loadAll();
+  }
+}
 
 
-        const result =
-          await response.json();
+/* =========================
+   CHECKLIST FORM
+========================= */
+
+function showChecklistForm() {
+
+  const box =
+    document.getElementById(
+      'checklist-form-container'
+    );
 
 
-        if (!result.success) {
+  box.innerHTML = `
 
-          throw new Error(
-            result.error || 'Lỗi'
-          );
+    <div class="form-card">
 
-        }
+      <div class="form-title">
+        ➕ Thêm checklist
+      </div>
+
+      <form onsubmit="submitChecklist(event)">
+
+        <div class="form-group">
+
+          <label>Món cần chuẩn bị</label>
+
+          <input
+            id="checklist-item"
+            placeholder="Ví dụ: Kem chống nắng"
+            required
+            autofocus
+          >
+
+        </div>
 
 
-        await loadAll();
+        <div class="form-actions">
+
+          <button
+            class="primary-btn"
+            type="submit"
+          >
+            Thêm
+          </button>
+
+          <button
+            class="secondary-btn"
+            type="button"
+            onclick="hideChecklistForm()"
+          >
+            Hủy
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+  `;
+}
 
 
-      } catch (error) {
+function hideChecklistForm() {
 
-        console.error(error);
+  document.getElementById(
+    'checklist-form-container'
+  ).innerHTML = '';
+}
 
-        alert(
-          'Không xóa được checklist.'
-        );
 
-      }
+async function submitChecklist(event) {
 
+  event.preventDefault();
+
+
+  const item =
+    document.getElementById(
+      'checklist-item'
+    ).value.trim();
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          action: 'addChecklist',
+          item: item
+        })
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.error || 'Lỗi'
+      );
     }
 
 
-    /* =========================
-       START
-    ========================= */
+    hideChecklistForm();
 
-    loadAll();
+    await loadAll();
 
-  </script>
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      'Không thêm được checklist.'
+    );
+  }
+}
+
+
+/* =========================
+   DELETE CHECKLIST
+========================= */
+
+async function deleteChecklist(row) {
+
+  if (
+    !confirm(
+      'Xóa món này khỏi checklist?'
+    )
+  ) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+          action: 'deleteChecklist',
+          row: row
+        })
+      });
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+      throw new Error(
+        result.error || 'Lỗi'
+      );
+    }
+
+
+    await loadAll();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert(
+      'Không xóa được checklist.'
+    );
+  }
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function formatMoney(value) {
+
+  return (
+    new Intl.NumberFormat(
+      'vi-VN'
+    ).format(
+      Number(value) || 0
+    ) + ' ₫'
+  );
+}
+
+
+function formatDateTime(value) {
+
+  if (!value) return '';
+
+
+  const date =
+    new Date(value);
+
+
+  if (
+    !isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return date.toLocaleString(
+      'vi-VN'
+    );
+  }
+
+
+  return String(value);
+}
+
+
+function getCurrentDateTime() {
+
+  const now =
+    new Date();
+
+
+  const y =
+    now.getFullYear();
+
+  const m =
+    String(
+      now.getMonth() + 1
+    ).padStart(2, '0');
+
+  const d =
+    String(
+      now.getDate()
+    ).padStart(2, '0');
+
+  const h =
+    String(
+      now.getHours()
+    ).padStart(2, '0');
+
+  const min =
+    String(
+      now.getMinutes()
+    ).padStart(2, '0');
+
+
+  return (
+    y + '-' +
+    m + '-' +
+    d + 'T' +
+    h + ':' +
+    min
+  );
+}
+
+
+function escapeHtml(value) {
+
+  return String(
+    value ?? ''
+  )
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+    .replace(
+      /</g,
+      '&lt;'
+    )
+    .replace(
+      />/g,
+      '&gt;'
+    )
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+}
+
+
+function escapeAttribute(value) {
+
+  return escapeHtml(value);
+}
+
+</script>
 
 </body>
 </html>
