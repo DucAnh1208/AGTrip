@@ -159,80 +159,60 @@
       font-size: 13px;
     }
 
-    /* MEMBERS */
-
+    /* MEMBER */
     .member-card {
       display: grid;
-      grid-template-columns: 28px 90px minmax(110px, 1fr) 38px 38px;
-      gap: 8px;
+      grid-template-columns: minmax(0, 1fr) auto auto auto;
       align-items: center;
+      gap: 12px;
       background: white;
       border-radius: 12px;
-      padding: 12px;
+      padding: 14px 16px;
       margin-bottom: 9px;
       box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
     }
     
-    .member-number,
-    .member-name {
-      align-self: center;
-    }
-    
-    .member-number {
-      text-align: center;
-      color: #777;
+    .member-info {
+      min-width: 0;
     }
     
     .member-name {
       font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 5px;
       overflow-wrap: anywhere;
     }
     
-    .member-fields {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
-    }
-    
-    .member-fields input,
-    .member-fields textarea {
+    .member-phone {
       width: 100%;
       min-width: 0;
-      padding: 8px;
       border: 1px solid #d1d5db;
       border-radius: 7px;
+      padding: 7px 9px;
       font: inherit;
-      font-size: 13px;
-    }
-    
-    .member-fields textarea {
-      resize: vertical;
-      min-height: 34px;
+      font-size: 14px;
     }
     
     .member-action,
     .save-member {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
-      justify-self: center;
-      align-self: center;
-      border: 0;
-      border-radius: 8px;
-      text-decoration: none;
+      border: none;
+      border-radius: 9px;
+      font-size: 18px;
       cursor: pointer;
-      font-size: 17px;
+      text-decoration: none;
     }
     
-    .member-action {
+    .member-call {
       background: #dcfce7;
       color: #166534;
     }
     
-    .member-action.map {
+    .member-map {
       background: #dbeafe;
       color: #1d4ed8;
     }
@@ -242,21 +222,25 @@
       color: white;
     }
     
-    @media (max-width: 600px) {
+    .member-action.disabled {
+      opacity: 0.35;
+    }
+    
+    @media (max-width: 420px) {
       .member-card {
-        grid-template-columns: 24px minmax(65px, 0.7fr) minmax(0, 1.5fr) 34px 34px;
-        gap: 5px;
-        padding: 9px 6px;
+        gap: 8px;
+        padding: 12px 10px;
       }
     
       .member-action,
       .save-member {
-        width: 32px;
+        width: 34px;
         height: 34px;
+        font-size: 16px;
       }
     
       .member-name {
-        font-size: 13px;
+        font-size: 15px;
       }
     }
 
@@ -859,7 +843,6 @@ function renderSchedule() {
 function renderMembers() {
   const box = document.getElementById('members-content');
   let html = '';
-  let number = 1;
 
   for (let i = 1; i < appData.members.length; i++) {
     const row = appData.members[i];
@@ -868,20 +851,14 @@ function renderMembers() {
     const name = String(row[1] ?? '').trim();
     if (!name) continue;
 
-    const phone = String(row[2] ?? '');
-    const ggMap = String(row[3] ?? '');
-    const note = String(row[4] ?? '');
+    const phone = String(row[2] ?? '').trim();
+    const map = String(row[3] ?? '').trim();
     const sheetRow = i + 1;
 
     html += `
       <div class="member-card" data-row="${sheetRow}">
-        <div class="member-number">${number}</div>
-
-        <div class="member-name">
-          ${escapeHtml(name)}
-        </div>
-
-        <div class="member-fields">
+        <div class="member-info">
+          <div class="member-name">${escapeHtml(name)}</div>
           <input
             class="member-phone"
             type="tel"
@@ -889,46 +866,34 @@ function renderMembers() {
             placeholder="Số điện thoại"
             value="${escapeHtml(phone)}"
           >
-
-          <input
-            class="member-map"
-            type="text"
-            placeholder="Link hoặc địa chỉ Google Maps"
-            value="${escapeHtml(ggMap)}"
-          >
-
-          <textarea
-            class="member-note"
-            rows="1"
-            placeholder="Ghi chú..."
-          >${escapeHtml(note)}</textarea>
         </div>
 
         <a
-          class="member-action"
-          href="${phone.trim() ? 'tel:' + encodeURIComponent(phone.trim()) : '#'}"
+          class="member-action member-call ${phone ? '' : 'disabled'}"
+          href="${phone ? 'tel:' + encodeURIComponent(phone) : '#'}"
           onclick="return callMember(this)"
           title="Gọi điện"
-          aria-label="Gọi điện"
-        >📞</a>
+        >☎</a>
 
         <button
-          class="member-action map"
+          class="member-action member-map ${map ? '' : 'disabled'}"
           onclick="openMemberMap(this)"
           title="Google Maps"
-          aria-label="Google Maps"
         >📍</button>
 
         <button
           class="save-member"
           onclick="saveMember(this)"
           title="Lưu"
-          aria-label="Lưu"
         >💾</button>
+
+        <input
+          type="hidden"
+          class="member-map-value"
+          value="${escapeHtml(map)}"
+        >
       </div>
     `;
-
-    number++;
   }
 
   box.innerHTML =
@@ -950,18 +915,17 @@ function callMember(button) {
 
 function openMemberMap(button) {
   const card = button.closest('.member-card');
-  const value = card.querySelector('.member-map').value.trim();
+  const map = card.querySelector('.member-map-value').value.trim();
 
-  if (!value) {
-    alert('Chưa có link hoặc địa chỉ Google Maps.');
+  if (!map) {
+    alert('Chưa có link Google Maps.');
     return;
   }
 
-  const isUrl = /^https?:\/\//i.test(value);
-  const url = isUrl
-    ? value
+  const url = /^https?:\/\//i.test(map)
+    ? map
     : 'https://www.google.com/maps/search/?api=1&query='
-      + encodeURIComponent(value);
+      + encodeURIComponent(map);
 
   window.open(url, '_blank', 'noopener');
 }
@@ -969,10 +933,8 @@ function openMemberMap(button) {
 async function saveMember(button) {
   const card = button.closest('.member-card');
   const row = Number(card.dataset.row);
-
   const phone = card.querySelector('.member-phone').value.trim();
-  const ggMap = card.querySelector('.member-map').value.trim();
-  const note = card.querySelector('.member-note').value;
+  const ggMap = card.querySelector('.member-map-value').value.trim();
 
   button.disabled = true;
   button.textContent = '...';
@@ -987,8 +949,7 @@ async function saveMember(button) {
         action: 'updateMember',
         row: row,
         phone: phone,
-        ggMap: ggMap,
-        note: note
+        ggMap: ggMap
       })
     });
 
@@ -997,6 +958,11 @@ async function saveMember(button) {
     if (!result.success) {
       throw new Error(result.error || 'Lỗi lưu dữ liệu');
     }
+
+    // Cập nhật trạng thái nút gọi theo số điện thoại mới.
+    const callButton = card.querySelector('.member-call');
+    callButton.classList.toggle('disabled', !phone);
+    callButton.href = phone ? 'tel:' + phone : '#';
 
     button.textContent = '✓';
 
