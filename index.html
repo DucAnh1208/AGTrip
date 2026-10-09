@@ -184,13 +184,18 @@
     }
     
     .member-phone {
+      display: block;
       width: 100%;
-      min-width: 0;
-      border: 1px solid #d1d5db;
-      border-radius: 7px;
-      padding: 7px 9px;
-      font: inherit;
+      padding: 0;
+      margin-top: 5px;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: #555;
+      font-family: inherit;
       font-size: 14px;
+      cursor: default;
+      pointer-events: none;
     }
     
     .member-action,
@@ -859,13 +864,7 @@ function renderMembers() {
       <div class="member-card" data-row="${sheetRow}">
         <div class="member-info">
           <div class="member-name">${escapeHtml(name)}</div>
-          <input
-            class="member-phone"
-            type="tel"
-            inputmode="tel"
-            placeholder="Số điện thoại"
-            value="${escapeHtml(phone)}"
-          >
+          <div class="member-phone"> ${escapeHtml(phone || 'Chưa có số điện thoại')} </div>
         </div>
 
         <a
